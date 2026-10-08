@@ -2,6 +2,7 @@ const customerService=require("./customer.service")
 
 const createCustomer = async (req, res) => {
   try {
+    console.log("REQUEST BODY:", req.body);
     const customer = await customerService.createCustomer(req.body);
 
     res.status(201).json({
