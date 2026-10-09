@@ -1,6 +1,7 @@
 const express=require("express")
 const app=express()
 const customerRoutes = require("./src/modules/customer/customer.routes");
+const productRoutes = require("./src/modules/product/product.routes");
 app.use(express.json());
 app.get("/",(req,res)=>{
    res.json({message:"Server started"})
@@ -12,4 +13,5 @@ app.get("/",(req,res)=>{
 // res.json({message:"User deleted"})
 // })
 app.use("/api/customers",customerRoutes)
+app.use("/api/products", productRoutes);
 module.exports=app;
