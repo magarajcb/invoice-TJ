@@ -227,10 +227,82 @@ const deleteInvoice = async (id) => {
   return invoiceRepository.deleteById(id);
 };
 
+const issueInvoice = async (id) => {
+  if (!mongoose.isValidObjectId(id)) {
+    throw new Error("Invalid invoice ID");
+  }
+
+  const invoice = await invoiceRepository.findById(id);
+
+  if (!invoice) {
+    throw new Error("Invoice not found");
+  }
+
+  if (invoice.status !== "Draft") {
+    throw new Error("Only draft invoices can be issued");
+  }
+
+  invoice.status = "Issued";
+  invoice.paymentStatus = "Unpaid";
+  invoice.amountPaid = 0;
+
+  return invoiceRepository.update(invoice);
+};
+
+const updatePaymentStatus = async (id, paymentStatus) => {
+  if (!mongoose.isValidObjectId(id)) {
+    throw new Error("Invalid invoice ID");
+  }
+
+  if (!["Paid", "Unpaid"].includes(paymentStatus)) {
+    throw new Error("Payment status must be Paid or Unpaid");
+  }
+
+  const invoice = await invoiceRepository.findById(id);
+
+  if (!invoice) {
+    throw new Error("Invoice not found");
+  }
+
+  if (invoice.status !== "Issued") {
+    throw new Error("Only issued invoices can change payment status");
+  }
+
+  invoice.paymentStatus = paymentStatus;
+  invoice.amountPaid =
+    paymentStatus === "Paid" ? invoice.grandTotal : 0;
+
+  return invoiceRepository.update(invoice);
+};
+
+const voidInvoice = async (id) => {
+  if (!mongoose.isValidObjectId(id)) {
+    throw new Error("Invalid invoice ID");
+  }
+
+  const invoice = await invoiceRepository.findById(id);
+
+  if (!invoice) {
+    throw new Error("Invoice not found");
+  }
+
+  if (invoice.status !== "Draft") {
+    throw new Error("Only draft invoices can be voided");
+  }
+
+  invoice.status = "Voided";
+
+  return invoiceRepository.update(invoice);
+};
+
+
 module.exports = {
   createInvoice,
   getInvoices,
   getInvoiceById,
   updateInvoice,
   deleteInvoice,
+  issueInvoice,
+  updatePaymentStatus,
+  voidInvoice
 };

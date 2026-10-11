@@ -1,6 +1,8 @@
 
 const express = require("express");
 
+const invoiceController = require("./invoice.controller");
+
 const {
   createInvoice,
   getInvoices,
@@ -16,5 +18,10 @@ router.get("/", getInvoices);
 router.get("/:id", getInvoiceById);
 router.put("/:id", updateInvoice);
 router.delete("/:id", deleteInvoice);
+
+router.post("/:id/issue", invoiceController.issueInvoice);
+router.patch("/:id/payment-status", invoiceController.updatePaymentStatus);
+router.post("/:id/void", invoiceController.voidInvoice);
+
 
 module.exports = router;

@@ -98,10 +98,90 @@ const deleteInvoice = async (req, res) => {
   }
 };
 
+const issueInvoice = async (req, res) => {
+  try {
+    const invoice = await invoiceService.issueInvoice(req.params.id);
+
+    return res.status(200).json({
+      success: true,
+      message: "Invoice issued successfully",
+      data: invoice
+    });
+  } catch (error) {
+    const status = error.message === "Invoice not found"
+      ? 404
+      : error.message === "Invalid invoice ID" ||
+        error.message.includes("Only draft")
+      ? 400
+      : 500;
+
+    return res.status(status).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
+const updatePaymentStatus = async (req, res) => {
+  try {
+    const invoice = await invoiceService.updatePaymentStatus(
+      req.params.id,
+      req.body.paymentStatus
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: "Payment status updated successfully",
+      data: invoice
+    });
+  } catch (error) {
+    const status = error.message === "Invoice not found"
+      ? 404
+      : error.message === "Invalid invoice ID" ||
+        error.message.includes("Only issued") ||
+        error.message.includes("Payment status must")
+      ? 400
+      : 500;
+
+    return res.status(status).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
+const voidInvoice = async (req, res) => {
+  try {
+    const invoice = await invoiceService.voidInvoice(req.params.id);
+
+    return res.status(200).json({
+      success: true,
+      message: "Invoice voided successfully",
+      data: invoice
+    });
+  } catch (error) {
+    const status = error.message === "Invoice not found"
+      ? 404
+      : error.message === "Invalid invoice ID" ||
+        error.message.includes("Only draft")
+      ? 400
+      : 500;
+
+    return res.status(status).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
+
 module.exports = {
   createInvoice,
   getInvoices,
   getInvoiceById,
   updateInvoice,
   deleteInvoice,
+  issueInvoice,
+  updatePaymentStatus,
+  voidInvoice
 };
