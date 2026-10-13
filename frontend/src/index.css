@@ -1,0 +1,91 @@
+ @import "tailwindcss";
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, Arial, sans-serif;
+  background: #f5f7fb;
+  color: #172033;
+}
+
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 230px;
+  flex-shrink: 0;
+  background: #172033;
+  color: white;
+  padding: 24px 16px;
+}
+
+.sidebar h2 {
+  margin: 0 0 32px;
+  font-size: 21px;
+}
+
+.sidebar nav {
+  display: grid;
+  gap: 8px;
+}
+
+.nav-link {
+  color: #cbd5e1;
+  text-decoration: none;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: white;
+  background: #34415a;
+}
+
+.main-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.topbar {
+  min-height: 76px;
+  padding: 16px 28px;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.topbar h2 {
+  font-size: 20px;
+}
+
+.topbar span {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.page-content {
+  padding: 28px;
+}
+
+@media (max-width: 650px) {
+  .sidebar {
+    width: 150px;
+    padding: 16px 8px;
+  }
+
+  .topbar {
+    padding: 14px;
+  }
+
+  .page-content {
+    padding: 16px;
+  }
+}

@@ -47,7 +47,7 @@ const getInvoiceById = async (req, res) => {
     });
   } catch (error) {
     const status =
-      error.message === "Invoice not found" ? 404 : 400;
+      error.message === "Invoice not found" ? 404 : 401;
 
     res.status(status).json({
       success: false,
@@ -89,7 +89,7 @@ const deleteInvoice = async (req, res) => {
     });
   } catch (error) {
     const status =
-      error.message === "Invoice not found" ? 404 : 400;
+      error.message === "Invoice not found" ? 404 : 401;
 
     res.status(status).json({
       success: false,
