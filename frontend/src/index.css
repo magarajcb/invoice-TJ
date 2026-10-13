@@ -139,3 +139,40 @@ th {
   color: #64748b;
   font-size: 13px;
 }
+.customer-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin: 24px 0;
+  padding: 20px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+}
+
+.customer-form input {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  font: inherit;
+}
+
+.customer-form button,
+td button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 7px;
+  background: #34415a;
+  color: white;
+  cursor: pointer;
+}
+
+.customer-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+td button {
+  padding: 7px 10px;
+}
