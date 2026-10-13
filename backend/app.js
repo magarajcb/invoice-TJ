@@ -1,9 +1,17 @@
 const express=require("express")
+const cors = require("cors");
 const app=express()
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  })
+);
+app.use(express.json());
 const customerRoutes = require("./src/modules/customer/customer.routes");
 const productRoutes = require("./src/modules/product/product.routes");
 const invoiceRoutes = require("./src/modules/invoice/invoice.routes");
 const dashboardRoutes = require("./src/modules/dashboard/dashboard.routes");
+
 app.use(express.json());
 app.get("/",(req,res)=>{
    res.json({message:"Server started"})
